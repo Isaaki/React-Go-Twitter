@@ -8,10 +8,16 @@ import (
 var DB *gorm.DB
 
 type User struct {
-	ID       uint   `json:"id" gorm:"primaryKey"`
-	Name     string `json:"name"`
-	Username string `json:"username"`
-	Email    string `json:"email"`
+	gorm.Model
+	Name     string
+	Username string
+	Email    string
+}
+
+type Tweet struct {
+	gorm.Model
+	Message string
+	UserID  uint
 }
 
 func InitDB() {
