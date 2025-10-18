@@ -1,7 +1,7 @@
 import type { Tweet } from "./types";
 import "./Tweet.css";
 
-export default function Tweet({ tweet }) {
+export default function Tweet({ tweet }: { tweet: Tweet }) {
   return (
     <div id="tweet-copy">
       <div className="tweet-feed-container">
