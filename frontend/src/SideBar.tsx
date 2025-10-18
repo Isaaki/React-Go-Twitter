@@ -3,7 +3,7 @@ import "./SideBar.css";
 import type { User } from "./types";
 
 export default function SideBar() {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<User>();
 
   useEffect(() => {
     fetch("http://localhost:8080/api/users")
