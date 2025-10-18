@@ -1,42 +1,31 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+    --background-color: white;
+    --hover-color: #e8f5fe;
+    --hover-click: #d2ecfc;
+    --hover-retweet-color: #e0f1e8;
+    --hover-like-color: #f5e2e8;
+    --twitter-color-blue: #1da1f2;
+    --twitter-color-hover-blue: #1a91da;
+    --retweet-color-green: #17bf63;
+    --like-color-red: #e0245e;
+    --border-color: #ebeef0;
+    --transition-hover: 0.1s;
+    --font-size-smaller: 13px;
+    --font-size-normal: 15px;
+    --font-size-bigger: 19px;
+    --font-color-gray: #597186;
+    --font-weight-normal: normal;
+    --font-weight-bolder: bolder;
+    --stadard-margin: 10px;
+    --stadard-padding: 10px;
+    --border-radius: 9999px;
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+    display: flex;
+    justify-content: space-between;
 }

@@ -1,0 +1,97 @@
+/* MAIN TWEETS  */
+
+.tweet-feed-container {
+    display: flex;
+    gap: 10px;
+    padding: 12px 16px;
+    cursor: pointer;
+}
+.tweet-feed-container:hover {
+    background-color: #00000008;
+}
+.tweet-container {
+    width: 100%;
+}
+.tweet-info {
+    display: flex;
+    gap: 5px;
+    padding-bottom: 4px;
+}
+.tweet-info *:first-child {
+    font-weight: var(--font-weight-bolder);
+}
+.tweet-info a {
+    text-decoration: none;
+    color: black;
+}
+.tweet-info > :first-child:hover {
+    text-decoration: underline;
+}
+.tweet-info *:not(:first-child) {
+    color: #5b7083;
+}
+.tweet-info div:last-child {
+    position: relative;
+    margin-left: auto;
+}
+.tweet-info div:last-child i {
+    position: absolute;
+    left: -24px;
+    top: -9px;
+    border-radius: var(--border-radius);
+    padding: 10px;
+    color: var(--font-color-gray);
+}
+.tweet-info div:last-child i:hover {
+    background-color: var(--hover-color);
+    color: var(--twitter-color-hover-blue);
+}
+
+.tweet-feed-container {
+    border-bottom: 1px solid var(--border-color);
+}
+.tweet-div {
+    padding-right: 20px;
+    line-height: normal;
+}
+.tweet-div-buttons {
+    display: flex;
+    margin-top: 6px;
+    justify-content: space-between;
+    max-width: 425px;
+    color: var(--font-color-gray);
+    align-items: center;
+}
+.tweet-div-button {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    padding-right: 10px;
+    align-items: center;
+    font-size: var(--font-size-smaller);
+}
+.tweet-div-button i {
+    font-size: var(--font-size-normal);
+    padding: 10px;
+    border-radius: var(--border-radius);
+}
+.tweet-div-button:hover {
+    color: var(--twitter-color-hover-blue);
+}
+.tweet-div-button:hover i {
+    background-color: var(--hover-color);
+}
+
+.tweet-div-retweet:hover {
+    color: var(--retweet-color-green);
+}
+.tweet-div-retweet:hover i {
+    background-color: var(--hover-retweet-color);
+}
+
+.tweet-div-like:hover {
+    color: var(--like-color-red);
+}
+.tweet-div-like:hover i {
+    background-color: var(--hover-like-color);
+}

@@ -28,22 +28,16 @@ func main() {
 		MaxAge:           12 * time.Hour,
 	}))
 
-	router.GET("/ping", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"message": "This is a test",
-		})
-	})
-
-	router.GET("/api/hello", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"message": "Hello, World!",
-		})
-	})
-
 	router.GET("/api/users", func(ctx *gin.Context) {
 		var users []db.User
 		db.DB.Find(&users)
 		ctx.JSON(http.StatusOK, users)
+	})
+
+	router.GET("/api/user/first", func(ctx *gin.Context) {
+		var user db.User
+		db.DB.First(&user)
+		ctx.JSON(http.StatusOK, user)
 	})
 
 	router.POST("/api/users", func(ctx *gin.Context) {
