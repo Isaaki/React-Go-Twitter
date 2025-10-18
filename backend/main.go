@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -28,26 +29,51 @@ func main() {
 		MaxAge:           12 * time.Hour,
 	}))
 
+	router.GET("/api/user/:id", func(ctx *gin.Context) {
+		strId := ctx.Param("id")
+		id, err := strconv.ParseUint(strId, 10, 64)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{"Invalid ID": err.Error()})
+			return
+		}
+
+		var user db.User
+		user.ID = uint(id)
+		db.DB.Find(&user)
+		ctx.JSON(http.StatusOK, user)
+	})
+
 	router.GET("/api/users", func(ctx *gin.Context) {
 		var users []db.User
 		db.DB.Find(&users)
 		ctx.JSON(http.StatusOK, users)
 	})
 
-	router.GET("/api/user/first", func(ctx *gin.Context) {
+	router.POST("/api/user", func(ctx *gin.Context) {
 		var user db.User
-		db.DB.First(&user)
-		ctx.JSON(http.StatusOK, user)
-	})
-
-	router.POST("/api/users", func(ctx *gin.Context) {
-		var user db.User
-		if error := ctx.BindJSON(&user); error != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": error.Error()})
+		if err := ctx.BindJSON(&user); err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 
 		db.DB.Create(&user)
+		ctx.JSON(http.StatusOK, user)
+	})
+
+	router.PUT("/api/user/:id", func(ctx *gin.Context) {
+		strId := ctx.Param("id")
+		id, err := strconv.ParseUint(strId, 10, 64)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{"Invalid ID": err.Error()})
+		}
+
+		var user db.User
+		if err := ctx.BindJSON(&user); err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		user.ID = uint(id)
+		db.DB.Updates(&user)
 		ctx.JSON(http.StatusOK, user)
 	})
 

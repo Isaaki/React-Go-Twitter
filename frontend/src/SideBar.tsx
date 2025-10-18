@@ -3,14 +3,14 @@ import "./SideBar.css";
 import type { User } from "./types";
 
 export default function SideBar() {
-  const [user, setUser] = useState<User>();
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/user/first")
+    fetch("http://localhost:8080/api/users")
       .then((res) => res.json())
-      .then((data) => setUser(data))
+      .then((data) => setUsers(data[0]))
       .catch(console.error);
-  }, [setUser]);
+  }, [setUsers]);
 
   return (
     <>
@@ -101,8 +101,8 @@ export default function SideBar() {
           <div className="avatar"></div>
 
           <div className="profile-username-container">
-            <div className="profile-name">{user?.name}</div>
-            <div className="profile-username">@{user?.username}</div>
+            <div className="profile-name">{users?.name}</div>
+            <div className="profile-username">@{users?.username}</div>
           </div>
 
           <div className="profile-dots">
