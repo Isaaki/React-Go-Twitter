@@ -37,18 +37,19 @@ export default function TweetFeed() {
             <div className="tweet-div-buttons">
               <button className="tweet-div-button">
                 <i className="fas fa-exclamation-triangle"></i>
-                {/*<span id="tweet-reply">{tweet.replies}</span>*/}
+                <span id="tweet-reply">{tweet.Replies}</span>
               </button>
               <button className="tweet-div-button tweet-main-retweet">
                 <i className="fas fa-exclamation-triangle"></i>
-                {/*<span id="tweet-retweet">{tweet.retweets}</span>*/}
+                <span id="tweet-retweet">{tweet.Retweets}</span>
               </button>
               <button className="tweet-div-button tweet-main-like">
                 <i className="fas fa-exclamation-triangle"></i>
-                {/*<span id="tweet-like">{tweet.likes}</span>*/}
+                <span id="tweet-like">{tweet.Likes}</span>
               </button>
               <button className="tweet-div-button">
                 <i className="fas fa-exclamation-triangle"></i>
+                <span id="tweet-like">{tweet.Views}</span>
               </button>
             </div>
           </div>

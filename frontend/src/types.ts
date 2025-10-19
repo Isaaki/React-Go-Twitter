@@ -18,4 +18,9 @@ export interface Tweet {
   UserID: number;
   User: User;
   Message: string;
+
+  Likes: number;
+  Replies: number;
+  Retweets: number;
+  Views: number;
 }

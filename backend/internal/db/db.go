@@ -28,6 +28,11 @@ type Tweet struct {
 	Message string `gorm:"not null"`
 	UserID  uint   `gorm:"not null"`
 	User    *User
+
+	Likes    uint
+	Replies  uint
+	Retweets uint
+	Views    uint
 }
 
 func InitDB() {
