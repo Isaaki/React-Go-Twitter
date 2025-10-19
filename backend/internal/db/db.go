@@ -1,6 +1,8 @@
 package db
 
 import (
+	"time"
+
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -8,16 +10,24 @@ import (
 var DB *gorm.DB
 
 type User struct {
-	gorm.Model
+	ID        uint `gorm:"primarykey"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+
 	Name     string
-	Username string
-	Email    string
+	Username string  `gorm:"not null"`
+	Email    string  `gorm:"unique;not null"`
+	Tweets   []Tweet `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
 
 type Tweet struct {
-	gorm.Model
-	Message string
-	UserID  uint
+	ID        uint `gorm:"primarykey"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+
+	Message string `gorm:"not null"`
+	UserID  uint   `gorm:"not null"`
+	User    *User
 }
 
 func InitDB() {
@@ -25,6 +35,8 @@ func InitDB() {
 	if err != nil {
 		panic("failed to connect database")
 	}
+
+	database.Exec("PRAGMA foreign_keys = ON")
 
 	database.AutoMigrate(&User{}, &Tweet{})
 
