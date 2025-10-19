@@ -1,16 +1,21 @@
 export interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
+  ID: number;
+  CreatedAt: string;
+  UpdatedAt: string;
+  DeletedAt: string;
+
+  Name: string;
+  Username: string;
+  Email: string;
 }
 
 export interface Tweet {
-  user: User;
-  likes: number;
-  replies: number;
-  retweets: number;
-  views: number;
-  message: string;
-  date: string;
+  ID: number;
+  CreatedAt: string;
+  UpdatedAt: string;
+  DeletedAt: string;
+
+  UserID: number;
+  User: User;
+  Message: string;
 }

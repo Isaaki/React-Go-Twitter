@@ -1,24 +1,5 @@
-import Tweet from "./Tweet";
-import type { User } from "./types";
+import TweetFeed from "./TweetFeed";
 import "./MainPage.css";
-
-const testUser: User = {
-  id: 1,
-  name: "Isak",
-  username: "isaaki",
-  email: "xisaaki@proton.me",
-};
-
-const tweet = {
-  user: testUser,
-  likes: 10,
-  replies: 100,
-  retweets: 2,
-  views: 10000,
-  message:
-    "this is a tweetthis is a tweetthis is a tweetthis is a tweetthis is a tweetthis is a tweetthis is a tweet",
-  date: "20202202",
-};
 
 export default function MainPage() {
   return (
@@ -73,10 +54,7 @@ export default function MainPage() {
           </div>
         </div>
         <div className="tweet-feed-seperator"></div>
-        <Tweet tweet={tweet} />
-        <Tweet tweet={tweet} />
-        <Tweet tweet={tweet} />
-        <Tweet tweet={tweet} />
+        <TweetFeed />
       </div>
       <div className="side-content">
         <input id="name" type="text" placeholder="name" />

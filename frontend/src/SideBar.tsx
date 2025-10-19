@@ -101,8 +101,8 @@ export default function SideBar() {
           <div className="avatar"></div>
 
           <div className="profile-username-container">
-            <div className="profile-name">{users?.name}</div>
-            <div className="profile-username">@{users?.username}</div>
+            <div className="profile-name">{users?.Name}</div>
+            <div className="profile-username">@{users?.Username}</div>
           </div>
 
           <div className="profile-dots">
