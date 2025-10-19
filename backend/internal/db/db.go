@@ -26,7 +26,7 @@ func InitDB() {
 		panic("failed to connect database")
 	}
 
-	database.AutoMigrate(&User{})
+	database.AutoMigrate(&User{}, &Tweet{})
 
 	DB = database
 }
