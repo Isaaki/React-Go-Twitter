@@ -1,0 +1,9 @@
+.tweet-feed-header {
+    display: flex;
+    gap: 0 var(--stadard-margin);
+    padding: 10px 15px;
+}
+
+#tweet-input {
+    field-sizing: content;
+}
