@@ -8,7 +8,7 @@ export default function SideBar() {
   useEffect(() => {
     fetch("http://localhost:8080/api/users")
       .then((res) => res.json())
-      .then((data) => setUsers(data[0]))
+      .then((data) => setUsers(data[1]))
       .catch(console.error);
   }, [setUsers]);
 
