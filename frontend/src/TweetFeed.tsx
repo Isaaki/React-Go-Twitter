@@ -1,16 +1,37 @@
 import { useState, useEffect } from "react";
-import type { Tweet } from "./types";
+import type { Tweet, SortModeKeyType } from "./types";
+import { SortMode } from "./constants";
 import "./TweetFeed.css";
 
-export default function TweetFeed() {
+export default function TweetFeed({
+  reloadTweetsKey: reloadTweetsKey,
+  sortMode: sortMode,
+}: {
+  reloadTweetsKey: number;
+  sortMode: SortModeKeyType;
+}) {
   const [tweets, setTweets] = useState<Tweet[]>([]);
 
   useEffect(() => {
     fetch("http://localhost:8080/api/tweets")
       .then((res) => res.json())
-      .then((data) => setTweets(data))
+      .then((data) => {
+        data.sort((a: Tweet, b: Tweet) => tweetSort(a, b, sortMode));
+        setTweets(data);
+      })
       .catch(console.error);
-  }, [setTweets]);
+  }, [reloadTweetsKey, sortMode]);
+
+  function tweetSort(a: Tweet, b: Tweet, mode: SortModeKeyType) {
+    const aDate = Date.parse(a.CreatedAt);
+    const bDate = Date.parse(b.CreatedAt);
+
+    if (mode === SortMode.ASC) {
+      return aDate - bDate; // ascending: older first
+    } else {
+      return bDate - aDate; // descending: newer first
+    }
+  }
 
   const tweetItems = tweets.map((tweet) => (
     <div id="tweet-copy">

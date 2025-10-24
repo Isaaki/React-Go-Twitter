@@ -24,3 +24,9 @@ export interface Tweet {
   Retweets: number;
   Views: number;
 }
+
+export type SortModeType = {
+  ASC: symbol;
+  DEC: symbol;
+};
+export type SortModeKeyType = SortModeType[keyof SortModeType];

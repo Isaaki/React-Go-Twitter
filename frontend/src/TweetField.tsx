@@ -1,35 +1,42 @@
 import { useRef, useEffect, useState } from "react";
 import "./TweetField.css";
 
-export default function TweetField() {
+interface TweetFieldProps {
+  tweetPosted?: () => void;
+}
+
+export default function TweetField({ tweetPosted }: TweetFieldProps) {
   const [text, setText] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const userID = localStorage.getItem("userID");
 
   const tweetPost = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/api/tweet", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          Message: text,
-          UserID: parseInt(userID ?? "-1"), // Error if null
-        }),
-      });
+    if (text !== "") {
+      try {
+        const response = await fetch("http://localhost:8080/api/tweet", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            Message: text,
+            UserID: parseInt(userID ?? "-1"), // Error if null
+          }),
+        });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      // Reset text field
-      setText("");
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        console.log(`Tweet Post Error: ${err.message}`);
-      } else {
-        console.log(`Tweet Post Error: ${String(err)}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        // Reset text field
+        setText("");
+        tweetPosted?.();
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          console.log(`Tweet Post Error: ${err.message}`);
+        } else {
+          console.log(`Tweet Post Error: ${String(err)}`);
+        }
       }
     }
   };
