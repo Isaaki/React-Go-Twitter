@@ -48,13 +48,15 @@ export default function TweetField({ tweetPosted }: TweetFieldProps) {
       textarea.style.height = "auto"; // Reset to shrink when deleting
       textarea.style.height = `${textarea.scrollHeight}px`; // Grow to fit
     }
-  }, []);
+  }, [setText]);
 
   return (
     <>
       <div className="tweet-feed-header">
         <a href="#" className="avatar-normal-container">
-          <div className="avatar-normal"></div>
+          <div className="avatar-normal">
+            <img src={localStorage.getItem("profilePicUrl")}></img>
+          </div>
         </a>
         <div className="tweet-feed-box">
           <textarea

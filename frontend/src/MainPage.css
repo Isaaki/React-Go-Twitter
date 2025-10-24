@@ -14,133 +14,25 @@
     border-left: 1px solid var(--border-color);
 }
 
-/* FEED HEADER */
-
-.feed-header {
-    display: flex;
-    position: sticky;
-    top: 0px;
-    z-index: 10;
-    background-color: var(--background-color);
-    justify-content: space-between;
-    align-items: center;
-    font-size: var(--font-size-bigger);
-    font-weight: 900;
-    height: 53px;
-    padding: 0 15px;
-    border-bottom: 1px solid var(--border-color);
-}
-.feed-header a {
-    text-decoration: none;
-    color: black;
-}
-.feed-header-icon {
-    border-radius: var(--border-radius);
-    color: var(--twitter-color-blue);
+.side-content {
     display: grid;
-    place-items: center;
-    padding: 9px;
-}
-.feed-header-icon:hover {
-    background-color: var(--hover-color);
+    padding-top: 25px;
+    margin-top: 25px;
+    grid-template-columns: 75%;
+    grid-auto-rows: minmax(10px, 50px);
+    align-items: center;
+    justify-items: center;
+
+    gap: 20px;
 }
 
-/* Avatar normal */
-
-.avatar-normal {
-    height: 48px;
-    width: 48px;
-    border-radius: var(--border-radius);
-    background-image: url(img/profile-pic.png);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-.avatar-normal:hover {
-    background-color: #1a1a1a26;
-}
-.avatar-normal-container {
-    height: max-content;
+.side-content > * {
+    margin: 10px;
+    padding: 4px;
+    border: 1px solid gray;
 }
 
-.tweet-feed-box {
+.side-content div {
     display: grid;
-    width: 100%;
-}
-
-hr {
-    display: none; /* This element is toggled by the JS function toggleDisplay */
-    margin-top: 0px;
-    margin-bottom: 0px;
-    opacity: 0.4;
-}
-
-.tweet-feed-input {
-    border: none;
-    outline: none;
-    font-size: var(--font-size-bigger);
-    box-sizing: border-box;
-    padding: 12px 0;
-}
-/* Fancy stuff to make text see though */
-.tweet-feed-input::-webkit-input-placeholder {
-    color: black;
-    opacity: 0.5;
-}
-
-.tweet-feed-scope {
-    display: none; /* This element is toggled by the JS function toggleDisplay */
-    padding-bottom: var(--stadard-padding);
-    font-size: var(--font-size-smaller);
-    font-weight: var(--font-weight-bolder);
-    color: var(--twitter-color-blue);
-}
-.tweet-feed-scope i {
-    font-size: var(--font-size-bigger);
-}
-.tweet-feed-scope-container {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    width: max-content;
-    padding: calc(var(--stadard-padding) - 5px);
-}
-.tweet-feed-scope-container:hover {
-    border-radius: var(--border-radius);
-    background-color: var(--hover-color);
-}
-
-.tweet-feed-buttons {
-    display: flex;
-    place-items: center;
-    padding-top: 10px;
-}
-.tweet-feed-buttons > *:last-child {
-    margin-left: auto;
-    padding: 5px 15px;
-    background-color: var(--twitter-color-blue);
-    border-radius: var(--border-radius);
-    height: 100%;
-    font-weight: var(--font-weight-bolder);
-    color: var(--background-color);
-}
-.tweet-feed-buttons :not(:last-child) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 38px;
-    width: 38px;
-    color: var(--twitter-color-blue);
-    font-size: var(--font-size-bigger);
-    border-radius: var(--border-radius);
-}
-.tweet-feed-buttons :not(:last-child):hover {
-    background-color: var(--hover-color);
-}
-
-.tweet-feed-seperator {
-    height: 12px;
-    background-color: #f7f9fa;
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
+    justify-items: center;
 }

@@ -7,6 +7,8 @@ export interface User {
   Name: string;
   Username: string;
   Email: string;
+
+  ProfilePicUrl: string;
 }
 
 export interface Tweet {

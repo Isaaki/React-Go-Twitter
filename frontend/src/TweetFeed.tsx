@@ -37,7 +37,9 @@ export default function TweetFeed({
     <div id="tweet-copy">
       <div className="tweet-feed-container">
         <a href="#" className="avatar-normal-container">
-          <div className="avatar-normal"></div>
+          <div className="avatar-normal">
+            <img src={tweet.User.ProfilePicUrl}></img>
+          </div>
         </a>
         <div className="tweet-container">
           <div className="tweet-info">

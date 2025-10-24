@@ -87,7 +87,9 @@ export default function SideBar() {
         {/*Tweet button*/}
         <button className="tweet-button">Tweet</button>
         <button className="profile-container">
-          <div className="avatar"></div>
+          <div className="avatar">
+            <img src={localStorage.getItem("profilePicUrl")}></img>
+          </div>
 
           <div className="profile-username-container">
             <div className="profile-name">{localStorage.getItem("name")}</div>

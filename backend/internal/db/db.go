@@ -18,6 +18,8 @@ type User struct {
 	Username string  `gorm:"not null"`
 	Email    string  `gorm:"unique;not null"`
 	Tweets   []Tweet `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+
+	ProfilePicUrl string
 }
 
 type Tweet struct {

@@ -95,3 +95,25 @@
 .tweet-div-like:hover i {
     background-color: var(--hover-like-color);
 }
+
+/* Avatar normal */
+.avatar-normal {
+    height: 48px;
+    width: 48px;
+    border-radius: var(--border-radius);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.avatar-normal:hover {
+    background-color: #1a1a1a26;
+}
+.avatar-normal-container {
+    height: max-content;
+}
+
+.avatar-normal img {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius);
+}

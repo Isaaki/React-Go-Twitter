@@ -1,10 +1,13 @@
 package main
 
 import (
+	"fmt"
+	"path/filepath"
 	"react-go-backend/internal/db"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 
 	"net/http"
 	"time"
@@ -17,6 +20,9 @@ func main() {
 
 	// https://github.com/gin-gonic/gin/blob/master/docs/doc.md#dont-trust-all-proxies
 	router.SetTrustedProxies(nil)
+
+	// Set uploads to static URL
+	router.Static("/static", "./uploads")
 
 	// CORS
 	router.Use(cors.New(cors.Config{
@@ -62,6 +68,30 @@ func main() {
 		}
 		db.DB.Create(&user)
 		ctx.JSON(http.StatusOK, user)
+	})
+
+	router.POST("/api/user/:userId/profilePicture", func(ctx *gin.Context) {
+		var user db.User
+		if err := db.DB.First(&user, ctx.Param("userId")).Error; err != nil {
+			ctx.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+			return
+		}
+
+		file, _ := ctx.FormFile("file")
+		filename := uuid.New().String() + filepath.Ext(file.Filename)
+		destination := filepath.Join("./uploads", filename)
+
+		if err := ctx.SaveUploadedFile(file, destination); err != nil {
+			ctx.String(http.StatusBadRequest, fmt.Sprintf("upload file err: %s", err.Error()))
+			return
+		}
+
+		fileURL := fmt.Sprintf("http://localhost:8080/static/%s", filename)
+
+		user.ProfilePicUrl = fileURL
+		db.DB.Updates(&user)
+
+		ctx.JSON(http.StatusOK, gin.H{"message": "File uploaded successfully!", "url": fileURL})
 	})
 
 	router.PUT("/api/user/:userId", func(ctx *gin.Context) {
