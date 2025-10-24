@@ -5,6 +5,35 @@ export default function TweetField() {
   const [text, setText] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
+  const userID = localStorage.getItem("userID");
+
+  const tweetPost = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/tweet", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Message: text,
+          UserID: parseInt(userID ?? "-1"), // Error if null
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      // Reset text field
+      setText("");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.log(`Tweet Post Error: ${err.message}`);
+      } else {
+        console.log(`Tweet Post Error: ${String(err)}`);
+      }
+    }
+  };
+
   // Automatically adjust height when text changes
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -57,7 +86,11 @@ export default function TweetField() {
             <button className="tweet-feed-icon-container">
               <i className="fas fa-exclamation-triangle"></i>
             </button>
-            <button id="tweet-button" className="tweet-feed-action">
+            <button
+              id="tweet-button"
+              className="tweet-feed-action"
+              onClick={tweetPost}
+            >
               Tweet
             </button>
           </div>

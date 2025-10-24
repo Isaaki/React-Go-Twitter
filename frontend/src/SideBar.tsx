@@ -1,17 +1,6 @@
-import { useState, useEffect } from "react";
 import "./SideBar.css";
-import type { User } from "./types";
 
 export default function SideBar() {
-  const [users, setUsers] = useState<User>();
-
-  useEffect(() => {
-    fetch("http://localhost:8080/api/users")
-      .then((res) => res.json())
-      .then((data) => setUsers(data[1]))
-      .catch(console.error);
-  }, [setUsers]);
-
   return (
     <>
       <div className="sidebar">
@@ -101,8 +90,10 @@ export default function SideBar() {
           <div className="avatar"></div>
 
           <div className="profile-username-container">
-            <div className="profile-name">{users?.Name}</div>
-            <div className="profile-username">@{users?.Username}</div>
+            <div className="profile-name">{localStorage.getItem("name")}</div>
+            <div className="profile-username">
+              @{localStorage.getItem("username")}
+            </div>
           </div>
 
           <div className="profile-dots">
