@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import "./TweetField.css";
+import { useRequiredUser } from "../context/useUser";
 
 interface TweetFieldProps {
   tweetPosted?: () => void;
@@ -8,8 +9,7 @@ interface TweetFieldProps {
 export default function TweetField({ tweetPosted }: TweetFieldProps) {
   const [text, setText] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-
-  const userID = localStorage.getItem("userID");
+  const { currentUser } = useRequiredUser();
 
   const tweetPost = async () => {
     if (text !== "") {
@@ -21,7 +21,7 @@ export default function TweetField({ tweetPosted }: TweetFieldProps) {
           },
           body: JSON.stringify({
             Message: text,
-            UserID: parseInt(userID ?? "-1"), // Error if null
+            UserID: currentUser.ID, // Error if null
           }),
         });
 
@@ -55,7 +55,7 @@ export default function TweetField({ tweetPosted }: TweetFieldProps) {
       <div className="tweet-feed-header">
         <a href="#" className="avatar-normal-container">
           <div className="avatar-normal">
-            <img src={localStorage.getItem("profilePicUrl")}></img>
+            <img src={currentUser.ProfilePicUrl}></img>
           </div>
         </a>
         <div className="tweet-feed-box">

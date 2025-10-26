@@ -1,5 +1,8 @@
 /* NAV */
 .sidebar {
+    display: flex;
+    flex-direction: column;
+
     margin-left: unset;
     width: 255px;
     height: 100vh;
@@ -156,10 +159,21 @@
     font-size: var(--font-size-normal);
     height: 59px;
     width: 255px;
-    margin: 10px 0;
     padding: 10px;
-    position: absolute;
-    bottom: 0;
+    margin-bottom: 10px;
+    border-radius: var(--border-radius);
+    background-color: inherit;
+}
+.profile-container-inactive {
+    margin-top: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: var(--font-size-normal);
+    height: 59px;
+    width: 255px;
+    padding: 10px;
+    margin-bottom: 10px;
     border-radius: var(--border-radius);
     background-color: inherit;
 }

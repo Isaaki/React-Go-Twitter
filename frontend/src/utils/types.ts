@@ -31,4 +31,5 @@ export type SortModeType = {
   ASC: symbol;
   DEC: symbol;
 };
+
 export type SortModeKeyType = SortModeType[keyof SortModeType];

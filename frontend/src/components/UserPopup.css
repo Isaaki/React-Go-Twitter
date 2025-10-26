@@ -1,0 +1,40 @@
+.userPopup {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    margin-top: auto;
+    width: 75%;
+    padding: 10px;
+
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+
+    font-size: var(--font-size-normal);
+
+    background-color: white;
+    z-index: 1000;
+}
+
+.userPopup-button-container {
+    width: 80%;
+    margin-top: 15px;
+}
+
+.userPopup-button {
+    font-size: var(--font-size-normal);
+    text-align: center;
+
+    padding: 10px;
+    width: 100%;
+
+    color: white;
+    background-color: var(--twitter-color-blue);
+    border-radius: var(--border-radius);
+}
+
+.userPopup-input {
+    font-size: var(--font-size-bigger);
+    /*font-size: 50px;*/
+}

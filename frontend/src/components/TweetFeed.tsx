@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import type { Tweet, SortModeKeyType } from "./types";
-import { SortMode } from "./constants";
+import type { Tweet, SortModeKeyType } from "../utils/types";
+import { SortMode } from "../utils/constants";
 import "./TweetFeed.css";
 
 export default function TweetFeed({
@@ -34,7 +34,7 @@ export default function TweetFeed({
   }
 
   const tweetItems = tweets.map((tweet) => (
-    <div id="tweet-copy">
+    <div id="tweet-copy" key={tweet.ID}>
       <div className="tweet-feed-container">
         <a href="#" className="avatar-normal-container">
           <div className="avatar-normal">

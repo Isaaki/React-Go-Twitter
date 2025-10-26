@@ -1,6 +1,14 @@
+import { useState } from "react";
+import { useRequiredUser } from "../context/useUser";
+
+import UserPopup from "./UserPopup";
+
 import "./SideBar.css";
 
 export default function SideBar() {
+  const [profileClicked, setProfileClicked] = useState(false);
+  const { currentUser } = useRequiredUser();
+
   return (
     <>
       <div className="sidebar">
@@ -84,18 +92,25 @@ export default function SideBar() {
             </div>
           </button>
         </nav>
+
         {/*Tweet button*/}
         <button className="tweet-button">Tweet</button>
-        <button className="profile-container">
+
+        {profileClicked ? <UserPopup /> : <div className="placeholder"></div>}
+        <button
+          className="profile-container"
+          onClick={() => {
+            setProfileClicked(!profileClicked);
+          }}
+          style={{ marginTop: profileClicked ? "unset" : "auto" }}
+        >
           <div className="avatar">
-            <img src={localStorage.getItem("profilePicUrl")}></img>
+            <img src={currentUser.ProfilePicUrl}></img>
           </div>
 
           <div className="profile-username-container">
-            <div className="profile-name">{localStorage.getItem("name")}</div>
-            <div className="profile-username">
-              @{localStorage.getItem("username")}
-            </div>
+            <div className="profile-name">{currentUser.Name}</div>
+            <div className="profile-username">@{currentUser.Username}</div>
           </div>
 
           <div className="profile-dots">

@@ -1,25 +1,44 @@
-import { useEffect } from "react";
-import SideBar from "./SideBar";
-import MainPage from "./MainPage";
+import { useEffect, useState } from "react";
+import SideBar from "./components/SideBar";
+import MainPage from "./components/MainPage";
 
-import type { User } from "./types";
+import { useUser } from "./context/useUser";
+
+import type { User } from "./utils/types";
 
 import "./assets/fontawesome-free/css/all.css";
 import "./reset.css";
 import "./App.css";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+  const { setCurrentUser } = useUser();
+
   useEffect(() => {
-    fetch("http://localhost:8080/api/user/2")
+    fetch(`http://localhost:8080/api/user/2`)
       .then((res) => res.json())
       .then((data: User) => {
-        localStorage.setItem("userID", String(data.ID));
-        localStorage.setItem("username", data.Username);
-        localStorage.setItem("name", data.Name);
-        localStorage.setItem("profilePicUrl", data.ProfilePicUrl);
+        const newData: User = {
+          ...data,
+          ID: data.ID,
+          Username: data.Username,
+          Name: data.Name,
+          ProfilePicUrl: data.ProfilePicUrl,
+        };
+        setCurrentUser(newData);
+        setLoading(false);
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (loading) {
+    console.log("Waiting on user load");
+    return <div>Loading user</div>;
+  }
 
   return (
     <>

@@ -2,15 +2,18 @@ import { useState } from "react";
 import TweetFeed from "./TweetFeed";
 import TweetField from "./TweetField";
 
-import type { SortModeKeyType } from "./types";
-import { SortMode } from "./constants";
+import type { SortModeKeyType } from "../utils/types";
+
+import { SortMode } from "../utils/constants";
 
 import "./MainPage.css";
+import { useRequiredUser } from "../context/useUser";
 
 export default function MainPage() {
   const [reloadTweetsKey, setReloadTweetsKey] = useState<number>(0);
   const [sortMode, setSortMode] = useState<SortModeKeyType>(SortMode.DEC);
   const [profilePic, setProfilePic] = useState<File | null>(null);
+  const { currentUser, setCurrentUser } = useRequiredUser();
 
   function tweetPosted() {
     setReloadTweetsKey((k) => k + 1);
@@ -39,7 +42,7 @@ export default function MainPage() {
 
       try {
         const response = await fetch(
-          `http://localhost:8080/api/user/${localStorage.getItem("userID")}/profilePicture`,
+          `http://localhost:8080/api/user/${currentUser.ID}/profilePicture`,
           {
             method: "POST",
             body: formData,
@@ -47,7 +50,7 @@ export default function MainPage() {
         );
 
         const data = await response.json();
-        localStorage.setItem("profilePicUrl", data.url);
+        setCurrentUser(data);
       } catch (err: unknown) {
         console.log(err);
       }
@@ -82,7 +85,6 @@ export default function MainPage() {
             Add user
           </button>
         </div>
-        <button id="add-tweets-to-feed">addTweetsToFeed</button>
         <button onClick={cycleSort}>Sort Mode</button>
         <div className="input-container">
           <input
