@@ -4,10 +4,20 @@ Made and tested on Linux might not work on windows
 
 ## Running
 ### Frontend
-`cd frontend`
-`npm install`
-`npm run dev`
+``` bash
+cd frontend
+```
+``` bash
+npm install
+```
+``` bash
+npm run dev
+```
 
 ### Backend
-`cd backend`
-`go run main.go`
+``` bash
+cd backend
+```
+``` bash
+go run main.go
+```
