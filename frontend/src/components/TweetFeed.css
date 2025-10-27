@@ -82,17 +82,17 @@
     background-color: var(--hover-color);
 }
 
-.tweet-div-retweet:hover {
+.tweet-main-retweet:hover {
     color: var(--retweet-color-green);
 }
-.tweet-div-retweet:hover i {
+.tweet-main-retweet:hover i {
     background-color: var(--hover-retweet-color);
 }
 
-.tweet-div-like:hover {
+.tweet-main-like:hover {
     color: var(--like-color-red);
 }
-.tweet-div-like:hover i {
+.tweet-main-like:hover i {
     background-color: var(--hover-like-color);
 }
 
