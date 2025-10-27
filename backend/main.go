@@ -26,7 +26,7 @@ func main() {
 
 	// CORS
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization", "Accept", "User-Agent", "Cache-Control", "Pragma"},
 		ExposeHeaders:    []string{"Content-Length"},
@@ -167,10 +167,12 @@ func main() {
 	})
 
 	router.DELETE("/api/tweets", func(ctx *gin.Context) {
-		var tweets []db.Tweet
-		db.DB.Delete(&tweets)
-		ctx.JSON(http.StatusOK, nil)
+		if err := db.DB.Where("1 = 1").Delete(&db.Tweet{}).Error; err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		ctx.JSON(http.StatusOK, gin.H{"message": "All users deleted"})
 	})
 
-	router.Run(":8080") // listens on 0.0.0.0:8080 by default
+	router.Run(":8080")
 }
