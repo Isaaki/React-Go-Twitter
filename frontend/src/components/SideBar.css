@@ -19,7 +19,6 @@
 .navbar {
     display: grid;
     height: 482px;
-    align-items: center;
 }
 
 .navbar-item {

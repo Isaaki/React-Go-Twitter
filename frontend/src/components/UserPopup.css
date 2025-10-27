@@ -12,6 +12,7 @@
     border: 1px solid var(--border-color);
 
     font-size: var(--font-size-normal);
+    box-shadow: 0 0 10px lightgray;
 
     background-color: white;
     z-index: 1000;
