@@ -16,13 +16,10 @@
     display: flex;
     gap: 5px;
     padding-bottom: 4px;
+    text-decoration: none;
 }
 .tweet-info *:first-child {
     font-weight: var(--font-weight-bolder);
-}
-.tweet-info a {
-    text-decoration: none;
-    color: black;
 }
 .tweet-info > :first-child:hover {
     text-decoration: underline;
@@ -45,6 +42,10 @@
 .tweet-info div:last-child i:hover {
     background-color: var(--hover-color);
     color: var(--twitter-color-hover-blue);
+}
+.tweet-info-text {
+    text-decoration: none;
+    color: black;
 }
 
 .tweet-feed-container {

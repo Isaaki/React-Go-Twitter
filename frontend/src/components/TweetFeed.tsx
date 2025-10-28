@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import type { Tweet, SortModeKeyType } from "../utils/types";
 import { SortMode } from "../utils/constants";
 import { RelativeTimeDisplay } from "../utils/functions";
@@ -39,27 +41,24 @@ export default function TweetFeed({
     return (
       <div id="tweet-copy" key={tweet.ID}>
         <div className="tweet-feed-container">
-          <a href="#" className="avatar-normal-container">
+          <Link
+            to={`/user/${tweet.User.Username}`}
+            className="avatar-normal-container"
+          >
             <div className="avatar-normal">
               <img src={tweet.User.ProfilePicUrl}></img>
             </div>
-          </a>
+          </Link>
           <div className="tweet-container">
-            <div className="tweet-info">
-              <a id="tweet-info-name" href="#">
-                {tweet.User.Name}
-              </a>
-              <a id="tweet-info-username" href="#">
-                @{tweet.User.Username}
-              </a>
+            <Link to={`/user/${tweet.User.Username}`} className="tweet-info">
+              <div className="tweet-info-text">{tweet.User.Name}</div>
+              <div className="tweet-info-text">@{tweet.User.Username}</div>
               <div>·</div>
-              <div id="tweet-info-date">
-                {RelativeTimeDisplay(new Date(tweet.CreatedAt))}
-              </div>
+              <div>{RelativeTimeDisplay(new Date(tweet.CreatedAt))}</div>
               <div>
                 <i className="fas fa-ellipsis-h"></i>
               </div>
-            </div>
+            </Link>
             <div className="tweet-div">
               <p className="tweet-div-text">{tweet.Message}</p>
               <div className="tweet-div-buttons">

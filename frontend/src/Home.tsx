@@ -8,9 +8,9 @@ import type { User } from "./utils/types";
 
 import "./assets/fontawesome-free/css/all.css";
 import "./reset.css";
-import "./App.css";
+import "./Home.css";
 
-function App() {
+function Home() {
   const [loading, setLoading] = useState(true);
   const { setCurrentUser } = useUser();
 
@@ -48,4 +48,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;

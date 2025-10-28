@@ -15,7 +15,7 @@ type User struct {
 	UpdatedAt time.Time
 
 	Name     string
-	Username string  `gorm:"not null"`
+	Username string  `gorm:"unique;not null"`
 	Email    string  `gorm:"unique;not null"`
 	Tweets   []Tweet `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 
