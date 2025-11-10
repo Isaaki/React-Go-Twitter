@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import "./TweetField.css";
-import { useRequiredUser } from "../context/useUser";
+import { useCurrentUser } from "../context/useUser";
 
 interface TweetFieldProps {
   tweetPosted?: () => void;
@@ -9,19 +9,17 @@ interface TweetFieldProps {
 export default function TweetField({ tweetPosted }: TweetFieldProps) {
   const [text, setText] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const { currentUser } = useRequiredUser();
+
+  const { currentUser } = useCurrentUser();
 
   const tweetPost = async () => {
     if (text !== "") {
       try {
-        const response = await fetch("http://localhost:8080/api/tweet", {
+        const response = await fetch("http://localhost:8080/user/tweet", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          credentials: "include",
           body: JSON.stringify({
             Message: text,
-            UserID: currentUser.ID, // Error if null
           }),
         });
 
@@ -50,62 +48,70 @@ export default function TweetField({ tweetPosted }: TweetFieldProps) {
     }
   }, [setText]);
 
-  return (
-    <>
-      <div className="tweet-feed-header">
-        <a href="#" className="avatar-normal-container">
-          <div className="avatar-normal">
-            <img src={currentUser.ProfilePicUrl}></img>
-          </div>
-        </a>
-        <div className="tweet-feed-box">
-          <textarea
-            id="tweet-input"
-            className="tweet-feed-input"
-            placeholder="What's happening?"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            ref={textareaRef}
-            rows={0}
-            style={{
-              overflow: "hidden",
-              resize: "none",
-            }}
-          />
-          <div className="tweet-feed-scope toggle-display">
-            <button className="tweet-feed-scope-container">
-              <i className="fas fa-globe-europe"></i>
-              <div className="tweet-feed-scope-button">Everyone can reply</div>
-            </button>
-          </div>
-          <hr className="toggle-display" />
-          <div className="tweet-feed-buttons">
-            <button className="tweet-feed-icon-container">
-              <i className="fas fa-exclamation-triangle"></i>
-            </button>
-            <button className="tweet-feed-icon-container">
-              <i className="fas fa-exclamation-triangle"></i>
-            </button>
-            <button className="tweet-feed-icon-container">
-              <i className="fas fa-exclamation-triangle"></i>
-            </button>
-            <button className="tweet-feed-icon-container">
-              <i className="fas fa-exclamation-triangle"></i>
-            </button>
-            <button className="tweet-feed-icon-container">
-              <i className="fas fa-exclamation-triangle"></i>
-            </button>
-            <button
-              id="tweet-button"
-              className="tweet-feed-action"
-              onClick={tweetPost}
-            >
-              Tweet
-            </button>
+  if (!currentUser) {
+    <>Loading User</>;
+  } else {
+    return (
+      <>
+        <div className="tweet-feed-header">
+          <a href="#" className="avatar-normal-container">
+            <div className="avatar-normal">
+              {currentUser.profilePicUrl && (
+                <img src={currentUser.profilePicUrl}></img>
+              )}
+            </div>
+          </a>
+          <div className="tweet-feed-box">
+            <textarea
+              id="tweet-input"
+              className="tweet-feed-input"
+              placeholder="What's happening?"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              ref={textareaRef}
+              rows={0}
+              style={{
+                overflow: "hidden",
+                resize: "none",
+              }}
+            />
+            <div className="tweet-feed-scope toggle-display">
+              <button className="tweet-feed-scope-container">
+                <i className="fas fa-globe-europe"></i>
+                <div className="tweet-feed-scope-button">
+                  Everyone can reply
+                </div>
+              </button>
+            </div>
+            <hr className="toggle-display" />
+            <div className="tweet-feed-buttons">
+              <button className="tweet-feed-icon-container">
+                <i className="fas fa-exclamation-triangle"></i>
+              </button>
+              <button className="tweet-feed-icon-container">
+                <i className="fas fa-exclamation-triangle"></i>
+              </button>
+              <button className="tweet-feed-icon-container">
+                <i className="fas fa-exclamation-triangle"></i>
+              </button>
+              <button className="tweet-feed-icon-container">
+                <i className="fas fa-exclamation-triangle"></i>
+              </button>
+              <button className="tweet-feed-icon-container">
+                <i className="fas fa-exclamation-triangle"></i>
+              </button>
+              <button
+                id="tweet-button"
+                className="tweet-feed-action"
+                onClick={tweetPost}
+              >
+                Tweet
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="tweet-feed-seperator"></div>
-    </>
-  );
+        <div className="tweet-feed-seperator"></div>
+      </>
+    );
+  }
 }

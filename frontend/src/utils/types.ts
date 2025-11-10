@@ -1,30 +1,30 @@
 export interface User {
-  ID: number;
-  CreatedAt: string;
-  UpdatedAt: string;
-  DeletedAt: string;
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
 
-  Name: string;
-  Username: string;
-  Email: string;
+  name: string;
+  username: string;
+  email: string;
 
-  ProfilePicUrl: string;
+  profilePicUrl: string;
 }
 
 export interface Tweet {
-  ID: number;
-  CreatedAt: string;
-  UpdatedAt: string;
-  DeletedAt: string;
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
 
-  UserID: number;
-  User: User;
-  Message: string;
+  userID: number;
+  user: User;
+  message: string;
 
-  Likes: number;
-  Replies: number;
-  Retweets: number;
-  Views: number;
+  likes: number;
+  replies: number;
+  retweets: number;
+  views: number;
 }
 
 export type SortModeType = {

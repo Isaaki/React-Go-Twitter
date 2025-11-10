@@ -1,5 +1,7 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
+import type { User } from "../utils/types";
 
 export const useUser = () => {
   const context = useContext(UserContext);
@@ -9,9 +11,21 @@ export const useUser = () => {
   return context;
 };
 
-export function useRequiredUser() {
-  const { currentUser, setCurrentUser } = useUser();
-  if (!currentUser)
-    throw new Error("useRequiredUser called when no user is set");
+export function useCurrentUser() {
+  const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const cacheUser = localStorage.getItem("currentUser");
+
+    if (cacheUser) {
+      console.log("User in localstorage");
+      setCurrentUser(JSON.parse(cacheUser));
+    } else {
+      console.log("User not in localstorage");
+      navigate("/login");
+    }
+  }, []);
+
   return { currentUser, setCurrentUser };
 }

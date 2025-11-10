@@ -7,13 +7,13 @@ import type { SortModeKeyType } from "../utils/types";
 import { SortMode } from "../utils/constants";
 
 import "./MainPage.css";
-import { useRequiredUser } from "../context/useUser";
+import { useCurrentUser } from "../context/useUser";
 
 export default function MainPage() {
   const [reloadTweetsKey, setReloadTweetsKey] = useState<number>(0);
   const [sortMode, setSortMode] = useState<SortModeKeyType>(SortMode.DEC);
   const [profilePic, setProfilePic] = useState<File | null>(null);
-  const { currentUser, setCurrentUser } = useRequiredUser();
+  const { setCurrentUser } = useCurrentUser();
 
   function tweetPosted() {
     setReloadTweetsKey((k) => k + 1);
@@ -42,9 +42,10 @@ export default function MainPage() {
 
       try {
         const response = await fetch(
-          `http://localhost:8080/api/user/${currentUser.ID}/profilePicture`,
+          `http://localhost:8080/user/profilePicture`,
           {
             method: "POST",
+            credentials: "include",
             body: formData,
           },
         );

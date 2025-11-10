@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import type { Tweet, SortModeKeyType } from "../utils/types";
 import { SortMode } from "../utils/constants";
-import { RelativeTimeDisplay } from "../utils/functions";
+import { RelativeTimeDisplay } from "../utils/time";
 
 import "./TweetFeed.css";
 
@@ -27,8 +27,8 @@ export default function TweetFeed({
   }, [reloadTweetsKey, sortMode]);
 
   function tweetSort(a: Tweet, b: Tweet, mode: SortModeKeyType) {
-    const aDate = Date.parse(a.CreatedAt);
-    const bDate = Date.parse(b.CreatedAt);
+    const aDate = Date.parse(a.createdAt);
+    const bDate = Date.parse(b.createdAt);
 
     if (mode === SortMode.ASC) {
       return aDate - bDate; // ascending: older first
@@ -39,44 +39,46 @@ export default function TweetFeed({
 
   const tweetItems = tweets.map((tweet) => {
     return (
-      <div id="tweet-copy" key={tweet.ID}>
+      <div id="tweet-copy" key={tweet.id}>
         <div className="tweet-feed-container">
           <Link
-            to={`/user/${tweet.User.Username}`}
+            to={`/user/${tweet.user.username}`}
             className="avatar-normal-container"
           >
             <div className="avatar-normal">
-              <img src={tweet.User.ProfilePicUrl}></img>
+              {tweet.user.profilePicUrl && (
+                <img src={tweet.user.profilePicUrl}></img>
+              )}
             </div>
           </Link>
           <div className="tweet-container">
-            <Link to={`/user/${tweet.User.Username}`} className="tweet-info">
-              <div className="tweet-info-text">{tweet.User.Name}</div>
-              <div className="tweet-info-text">@{tweet.User.Username}</div>
+            <Link to={`/user/${tweet.user.username}`} className="tweet-info">
+              <div className="tweet-info-text">{tweet.user.name}</div>
+              <div className="tweet-info-text">@{tweet.user.username}</div>
               <div>·</div>
-              <div>{RelativeTimeDisplay(new Date(tweet.CreatedAt))}</div>
+              <div>{RelativeTimeDisplay(new Date(tweet.createdAt))}</div>
               <div>
                 <i className="fas fa-ellipsis-h"></i>
               </div>
             </Link>
             <div className="tweet-div">
-              <p className="tweet-div-text">{tweet.Message}</p>
+              <p className="tweet-div-text">{tweet.message}</p>
               <div className="tweet-div-buttons">
                 <button className="tweet-div-button">
                   <i className="fas fa-exclamation-triangle"></i>
-                  <span id="tweet-reply">{tweet.Replies}</span>
+                  <span id="tweet-reply">{tweet.replies}</span>
                 </button>
                 <button className="tweet-div-button tweet-main-retweet">
                   <i className="fas fa-exclamation-triangle"></i>
-                  <span id="tweet-retweet">{tweet.Retweets}</span>
+                  <span id="tweet-retweet">{tweet.retweets}</span>
                 </button>
                 <button className="tweet-div-button tweet-main-like">
                   <i className="fas fa-exclamation-triangle"></i>
-                  <span id="tweet-like">{tweet.Likes}</span>
+                  <span id="tweet-like">{tweet.likes}</span>
                 </button>
                 <button className="tweet-div-button">
                   <i className="fas fa-exclamation-triangle"></i>
-                  <span id="tweet-like">{tweet.Views}</span>
+                  <span id="tweet-like">{tweet.views}</span>
                 </button>
               </div>
             </div>
