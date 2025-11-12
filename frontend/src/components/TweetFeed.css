@@ -1,5 +1,8 @@
 /* MAIN TWEETS  */
 
+.tweet-feed {
+    width: max(30rem, 40vw);
+}
 .tweet-feed-container {
     display: flex;
     gap: 10px;

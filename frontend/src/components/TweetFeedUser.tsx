@@ -1,30 +1,32 @@
-// import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import type { Tweet } from "../utils/types";
+import type { User } from "../utils/types";
 import { RelativeTimeDisplay } from "../utils/time";
 
 import "./TweetFeed.css";
 
-export default function TweetFeed({ tweets: tweets }: { tweets: Tweet[] }) {
+export default function TweetFeedUser({ user: user }: { user: User }) {
+  const tweets = user.tweets;
+  if (!tweets) {
+    console.error("No Tweets in user");
+    return;
+  }
   const tweetItems = tweets.map((tweet) => {
     return (
       <div id="tweet-copy" key={tweet.id}>
         <div className="tweet-feed-container">
           <Link
-            to={`/user/${tweet.user.username}`}
+            to={`/user/${user.username}`}
             className="avatar-normal-container"
           >
             <div className="avatar-normal">
-              {tweet.user.profilePicUrl && (
-                <img src={tweet.user.profilePicUrl}></img>
-              )}
+              {user.profilePicUrl && <img src={user.profilePicUrl}></img>}
             </div>
           </Link>
           <div className="tweet-container">
-            <Link to={`/user/${tweet.user.username}`} className="tweet-info">
-              <div className="tweet-info-text">{tweet.user.name}</div>
-              <div className="tweet-info-text">@{tweet.user.username}</div>
+            <Link to={`/user/${user.username}`} className="tweet-info">
+              <div className="tweet-info-text">{user.name}</div>
+              <div className="tweet-info-text">@{user.username}</div>
               <div>·</div>
               <div>{RelativeTimeDisplay(new Date(tweet.createdAt))}</div>
               <div>
@@ -58,5 +60,5 @@ export default function TweetFeed({ tweets: tweets }: { tweets: Tweet[] }) {
     );
   });
 
-  return <>{tweetItems}</>;
+  return <div className="tweet-feed">{tweetItems}</div>;
 }

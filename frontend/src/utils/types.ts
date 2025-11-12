@@ -7,6 +7,7 @@ export interface User {
   name: string;
   username: string;
   email: string;
+  tweets: Tweet[] | null;
 
   profilePicUrl: string;
 }

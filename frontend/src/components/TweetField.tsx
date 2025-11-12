@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import "./TweetField.css";
 import { useCurrentUser } from "../context/useUser";
+import { Link } from "react-router-dom";
 
 interface TweetFieldProps {
   tweetPosted?: () => void;
@@ -54,13 +55,16 @@ export default function TweetField({ tweetPosted }: TweetFieldProps) {
     return (
       <>
         <div className="tweet-feed-header">
-          <a href="#" className="avatar-normal-container">
+          <Link
+            to={`/user/${currentUser.username}`}
+            className="avatar-normal-container"
+          >
             <div className="avatar-normal">
               {currentUser.profilePicUrl && (
                 <img src={currentUser.profilePicUrl}></img>
               )}
             </div>
-          </a>
+          </Link>
           <div className="tweet-feed-box">
             <textarea
               id="tweet-input"

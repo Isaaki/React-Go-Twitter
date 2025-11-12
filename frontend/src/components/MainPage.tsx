@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TweetFeed from "./TweetFeed";
 import TweetField from "./TweetField";
 
-import type { SortModeKeyType } from "../utils/types";
+import type { SortModeKeyType, Tweet } from "../utils/types";
 
 import { SortMode } from "../utils/constants";
 
@@ -14,9 +14,31 @@ export default function MainPage() {
   const [sortMode, setSortMode] = useState<SortModeKeyType>(SortMode.DEC);
   const [profilePic, setProfilePic] = useState<File | null>(null);
   const { setCurrentUser } = useCurrentUser();
+  const [tweets, setTweets] = useState<Tweet[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/tweets")
+      .then((res) => res.json())
+      .then((data) => {
+        data.sort((a: Tweet, b: Tweet) => tweetSort(a, b, sortMode));
+        setTweets(data);
+      })
+      .catch(console.error);
+  }, [reloadTweetsKey, sortMode]);
 
   function tweetPosted() {
     setReloadTweetsKey((k) => k + 1);
+  }
+
+  function tweetSort(a: Tweet, b: Tweet, mode: SortModeKeyType) {
+    const aDate = Date.parse(a.createdAt);
+    const bDate = Date.parse(b.createdAt);
+
+    if (mode === SortMode.ASC) {
+      return aDate - bDate; // ascending: older first
+    } else {
+      return bDate - aDate; // descending: newer first
+    }
   }
 
   function cycleSort() {
@@ -68,7 +90,11 @@ export default function MainPage() {
           </button>
         </div>
         <TweetField tweetPosted={tweetPosted} />
-        <TweetFeed reloadTweetsKey={reloadTweetsKey} sortMode={sortMode} />
+        <TweetFeed
+          tweets={tweets}
+          reloadTweetsKey={reloadTweetsKey}
+          sortMode={sortMode}
+        />
       </div>
       <div className="side-content">
         <div>

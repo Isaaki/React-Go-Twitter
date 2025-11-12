@@ -79,11 +79,19 @@ func main() {
 		var user models.User
 
 		username := ctx.Query("username")
+		tweets := ctx.Query("tweets")
+
 		if username != "" {
 			if err := db.DB.Preload("Tweets").Where("Username = ?", username).First(&user).Error; err != nil {
 				ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 				return
 			}
+
+			if tweets == "true" {
+				ctx.JSON(http.StatusOK, user.Tweets)
+				return
+			}
+
 			ctx.JSON(http.StatusOK, user)
 			return
 		}
