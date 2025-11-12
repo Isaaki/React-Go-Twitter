@@ -22,15 +22,17 @@ export default function TweetFeed({ tweets: tweets }: { tweets: Tweet[] }) {
             </div>
           </Link>
           <div className="tweet-container">
-            <Link to={`/user/${tweet.user.username}`} className="tweet-info">
-              <div className="tweet-info-text">{tweet.user.name}</div>
-              <div className="tweet-info-text">@{tweet.user.username}</div>
-              <div>·</div>
-              <div>{RelativeTimeDisplay(new Date(tweet.createdAt))}</div>
-              <div>
+            <div className="tweet-info-container">
+              <Link to={`/user/${tweet.user.username}`} className="tweet-info">
+                <div className="tweet-info-text">{tweet.user.name}</div>
+                <div className="tweet-info-text">@{tweet.user.username}</div>
+                <div>·</div>
+                <div>{RelativeTimeDisplay(new Date(tweet.createdAt))}</div>
+              </Link>
+              <div className="tweet-info-ellipsis">
                 <i className="fas fa-ellipsis-h"></i>
               </div>
-            </Link>
+            </div>
             <div className="tweet-div">
               <p className="tweet-div-text">{tweet.message}</p>
               <div className="tweet-div-buttons">

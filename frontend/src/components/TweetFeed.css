@@ -15,6 +15,14 @@
 .tweet-container {
     width: 100%;
 }
+
+.tweet-info-container {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    padding-bottom: 4px;
+    text-decoration: none;
+}
 .tweet-info {
     display: flex;
     gap: 5px;
@@ -30,11 +38,16 @@
 .tweet-info *:not(:first-child) {
     color: #5b7083;
 }
-.tweet-info div:last-child {
+.tweet-info-text {
+    text-decoration: none;
+    color: black;
+}
+
+.tweet-info-ellipsis {
     position: relative;
     margin-left: auto;
 }
-.tweet-info div:last-child i {
+.tweet-info-ellipsis i {
     position: absolute;
     left: -24px;
     top: -9px;
@@ -42,13 +55,9 @@
     padding: 10px;
     color: var(--font-color-gray);
 }
-.tweet-info div:last-child i:hover {
+.tweet-info-ellipsis i:hover {
     background-color: var(--hover-color);
     color: var(--twitter-color-hover-blue);
-}
-.tweet-info-text {
-    text-decoration: none;
-    color: black;
 }
 
 .tweet-feed-container {
