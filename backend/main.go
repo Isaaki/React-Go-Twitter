@@ -74,7 +74,10 @@ func main() {
 			return
 		}
 
-		responses := utils.TweetsToResponses(user.Tweets)
+		responses, err := utils.TweetsToResponses(user.Tweets)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, err)
+		}
 		ctx.JSON(http.StatusOK, responses)
 	})
 
@@ -85,13 +88,19 @@ func main() {
 		tweets := ctx.Query("tweets")
 
 		if username != "" {
-			if err := db.DB.Preload("Tweets").Preload("User").Where("Username = ?", username).First(&user).Error; err != nil {
+			if err := db.DB.Where("Username = ?", username).First(&user).Error; err != nil {
 				ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 				return
 			}
 
 			if tweets == "true" {
-				ctx.JSON(http.StatusOK, user.Tweets)
+				db.DB.Preload("Tweets.User").First(&user)
+				responses, err := utils.TweetsToResponses(user.Tweets)
+				if err != nil {
+					ctx.JSON(http.StatusInternalServerError, err)
+				}
+
+				ctx.JSON(http.StatusOK, responses)
 				return
 			}
 
@@ -99,7 +108,7 @@ func main() {
 			return
 		}
 
-		ctx.JSON(http.StatusNotFound, "No user found")
+		ctx.JSON(http.StatusNotFound, "username query empty")
 	})
 
 	router.POST("/api/user", func(ctx *gin.Context) {
@@ -172,7 +181,10 @@ func main() {
 		var tweets []models.Tweet
 		db.DB.Preload("User").Find(&tweets)
 
-		responses := utils.TweetsToResponses(tweets)
+		responses, err := utils.TweetsToResponses(tweets)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, err)
+		}
 		ctx.JSON(http.StatusOK, responses)
 	})
 
@@ -202,7 +214,10 @@ func main() {
 			return
 		}
 
-		response := utils.TweetToResponse(tweet)
+		response, err := utils.TweetToResponse(tweet)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, err)
+		}
 		ctx.JSON(http.StatusOK, response)
 	})
 

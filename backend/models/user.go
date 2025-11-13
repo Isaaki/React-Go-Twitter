@@ -16,9 +16,10 @@ type User struct {
 	ProfilePicUrl string `json:"profilePicUrl"`
 }
 
-type APIUser struct {
-	ID            uint   `json:"id" gorm:"primarykey"`
-	Username      string `json:"username" gorm:"unique;not null"`
-	Name          string `json:"name"`
-	ProfilePicUrl string `json:"profilePicUrl"`
+type UserResponse struct {
+	ID            uint            `json:"id" gorm:"primarykey"`
+	Username      string          `json:"username" gorm:"unique;not null"`
+	Name          string          `json:"name"`
+	Tweets        []TweetResponse `json:"tweets"`
+	ProfilePicUrl string          `json:"profilePicUrl"`
 }

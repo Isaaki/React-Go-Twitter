@@ -22,8 +22,8 @@ type TweetResponse struct {
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 
-	Message string   `json:"message" gorm:"not null"`
-	User    *APIUser `json:"user"`
+	Message string        `json:"message" gorm:"not null"`
+	User    *UserResponse `json:"user"`
 
 	Likes    uint `json:"likes"`
 	Replies  uint `json:"replies"`
