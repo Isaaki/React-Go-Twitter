@@ -20,6 +20,11 @@ func CreateUser(ctx *gin.Context) {
 		return
 	}
 
+	if authInput.Email == "" {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "email required"})
+		return
+	}
+
 	var userFound models.User
 	db.DB.Where("username=?", authInput.Username).Find(&userFound)
 
@@ -37,6 +42,7 @@ func CreateUser(ctx *gin.Context) {
 	user := models.User{
 		Username: authInput.Username,
 		Password: string(passwordHash),
+		Email:    authInput.Email,
 	}
 
 	db.DB.Create(&user)

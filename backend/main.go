@@ -8,6 +8,7 @@ import (
 	"react-go-backend/internal/db"
 	"react-go-backend/middleware"
 	"react-go-backend/models"
+	"react-go-backend/utils"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -68,11 +69,13 @@ func main() {
 
 	router.GET("/api/user/:userId/tweets", func(ctx *gin.Context) {
 		var user models.User
-		if err := db.DB.Preload("Tweets").First(&user, ctx.Param("userId")).Error; err != nil {
+		if err := db.DB.Preload("Tweets.User").First(&user, ctx.Param("userId")).Error; err != nil {
 			ctx.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
 			return
 		}
-		ctx.JSON(http.StatusOK, user.Tweets)
+
+		responses := utils.TweetsToResponses(user.Tweets)
+		ctx.JSON(http.StatusOK, responses)
 	})
 
 	router.GET("/api/user/", func(ctx *gin.Context) {
@@ -82,7 +85,7 @@ func main() {
 		tweets := ctx.Query("tweets")
 
 		if username != "" {
-			if err := db.DB.Preload("Tweets").Where("Username = ?", username).First(&user).Error; err != nil {
+			if err := db.DB.Preload("Tweets").Preload("User").Where("Username = ?", username).First(&user).Error; err != nil {
 				ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 				return
 			}
@@ -168,7 +171,9 @@ func main() {
 	router.GET("/api/tweets", func(ctx *gin.Context) {
 		var tweets []models.Tweet
 		db.DB.Preload("User").Find(&tweets)
-		ctx.JSON(http.StatusOK, tweets)
+
+		responses := utils.TweetsToResponses(tweets)
+		ctx.JSON(http.StatusOK, responses)
 	})
 
 	router.POST("/api/tweet", func(ctx *gin.Context) {
@@ -196,7 +201,9 @@ func main() {
 			ctx.JSON(http.StatusNotFound, gin.H{"error": "Tweet not found"})
 			return
 		}
-		ctx.JSON(http.StatusOK, tweet)
+
+		response := utils.TweetToResponse(tweet)
+		ctx.JSON(http.StatusOK, response)
 	})
 
 	router.DELETE("/api/tweet/:tweetId", func(ctx *gin.Context) {

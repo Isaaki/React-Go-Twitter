@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"react-go-backend/internal/db"
 	"react-go-backend/models"
+	"react-go-backend/utils"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -60,9 +61,14 @@ func DeleteUserProfile(ctx *gin.Context) {
 
 func GetUserTweets(ctx *gin.Context) {
 	user := getUser(ctx)
-	db.DB.Preload("Tweets").First(&user)
 
-	ctx.JSON(http.StatusOK, user.Tweets)
+	if err := db.DB.Preload("Tweets.User").First(&user).Error; err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	responses := utils.TweetsToResponses(user.Tweets)
+	ctx.JSON(http.StatusOK, responses)
 }
 
 func PostUserTweet(ctx *gin.Context) {
