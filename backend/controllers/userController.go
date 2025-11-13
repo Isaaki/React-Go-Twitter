@@ -67,7 +67,10 @@ func GetUserTweets(ctx *gin.Context) {
 		return
 	}
 
-	responses := utils.TweetsToResponses(user.Tweets)
+	responses, err := utils.TweetsToResponsesUser(user.Tweets)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err)
+	}
 	ctx.JSON(http.StatusOK, responses)
 }
 

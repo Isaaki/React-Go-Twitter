@@ -53,18 +53,24 @@ func main() {
 	// User Routes
 	router.GET("/api/users", func(ctx *gin.Context) {
 		var users []models.User
-		db.DB.Preload("Tweets").Find(&users)
-		ctx.JSON(http.StatusOK, users)
+		db.DB.Preload("Tweets.User").Find(&users)
+
+		responses, err := utils.UsersToResponsesTweets(users)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, err)
+		}
+		ctx.JSON(http.StatusOK, responses)
 	})
 
 	router.GET("/api/user/:userId", func(ctx *gin.Context) {
 		var user models.User
-		if err := db.DB.Preload("Tweets").First(&user, ctx.Param("userId")).Error; err != nil {
+		if err := db.DB.Preload("Tweets.User").First(&user, ctx.Param("userId")).Error; err != nil {
 			ctx.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
 			return
 		}
 
-		ctx.JSON(http.StatusOK, user)
+		response := utils.UserToResponse(user)
+		ctx.JSON(http.StatusOK, response)
 	})
 
 	router.GET("/api/user/:userId/tweets", func(ctx *gin.Context) {
@@ -74,7 +80,7 @@ func main() {
 			return
 		}
 
-		responses, err := utils.TweetsToResponses(user.Tweets)
+		responses, err := utils.TweetsToResponsesUser(user.Tweets)
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, err)
 		}
@@ -95,7 +101,7 @@ func main() {
 
 			if tweets == "true" {
 				db.DB.Preload("Tweets.User").First(&user)
-				responses, err := utils.TweetsToResponses(user.Tweets)
+				responses, err := utils.TweetsToResponsesUser(user.Tweets)
 				if err != nil {
 					ctx.JSON(http.StatusInternalServerError, err)
 				}
@@ -181,7 +187,7 @@ func main() {
 		var tweets []models.Tweet
 		db.DB.Preload("User").Find(&tweets)
 
-		responses, err := utils.TweetsToResponses(tweets)
+		responses, err := utils.TweetsToResponsesUser(tweets)
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, err)
 		}
@@ -214,7 +220,7 @@ func main() {
 			return
 		}
 
-		response, err := utils.TweetToResponse(tweet)
+		response, err := utils.TweetToResponseUser(tweet)
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, err)
 		}
