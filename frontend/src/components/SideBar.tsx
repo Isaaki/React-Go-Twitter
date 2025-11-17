@@ -20,7 +20,7 @@ export default function SideBar() {
           </a>
           {/*Navbar*/}
           <nav className="navbar">
-            <Link to={"/home"} className="navbar-item">
+            <Link to={"/"} className="navbar-item">
               <div className="navbar-text-container">
                 <div className="navbar-icon-container">
                   <i className="fas fa-home"></i>

@@ -13,6 +13,7 @@ createRoot(document.getElementById("root")!).render(
       <UserProvider>
         <Routes>
           <Route index element={<Home />} />
+          <Route path="home" element={<Home />} />
           <Route path="user/:username" element={<UserPage />} />
           <Route path="login" element={<Login />} />
         </Routes>
