@@ -15,7 +15,8 @@ import (
 func CheckAuth(ctx *gin.Context) {
 	tokenString, err := ctx.Cookie("session_token")
 	if err != nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"error": "Session_token not found"})
+		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Session_token not found"})
+		ctx.Abort()
 		return
 	}
 
@@ -27,7 +28,7 @@ func CheckAuth(ctx *gin.Context) {
 	})
 	if err != nil || !token.Valid {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
-		ctx.AbortWithStatus(http.StatusUnauthorized)
+		ctx.Abort()
 		return
 	}
 
@@ -40,7 +41,7 @@ func CheckAuth(ctx *gin.Context) {
 
 	if float64(time.Now().Unix()) > claims["exp"].(float64) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "token expired"})
-		ctx.AbortWithStatus(http.StatusUnauthorized)
+		ctx.Abort()
 		return
 	}
 
@@ -48,7 +49,7 @@ func CheckAuth(ctx *gin.Context) {
 	db.DB.Where("ID=?", claims["id"]).Find(&user)
 
 	if user.ID == 0 {
-		ctx.AbortWithStatus(http.StatusUnauthorized)
+		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "User not found"})
 		return
 	}
 

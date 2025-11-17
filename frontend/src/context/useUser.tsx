@@ -16,15 +16,27 @@ export function useCurrentUser() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const cacheUser = localStorage.getItem("currentUser");
-
-    if (cacheUser) {
-      console.log("User in localstorage");
-      setCurrentUser(JSON.parse(cacheUser));
-    } else {
-      console.log("User not in localstorage");
-      navigate("/login");
-    }
+    fetch("http://localhost:8080/user/profile", {
+      method: "get",
+      credentials: "include",
+    })
+      .then((res) => {
+        if (res.status === 401) {
+          console.log("401 if statment");
+          navigate("/login");
+          return;
+        }
+        return res.json();
+      })
+      .then((data) => {
+        localStorage.clear();
+        localStorage.setItem("CurrentUser", JSON.stringify(data));
+        setCurrentUser(data);
+      })
+      .catch(() => {
+        console.log("catch");
+        navigate("/login");
+      });
   }, []);
 
   return { currentUser, setCurrentUser };

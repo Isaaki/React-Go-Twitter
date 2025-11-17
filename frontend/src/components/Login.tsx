@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/useUser";
 
 const loginContainerStyle: React.CSSProperties = {
   display: "flex",
@@ -11,6 +12,7 @@ const loginContainerStyle: React.CSSProperties = {
 
 export default function Login() {
   const navigate = useNavigate();
+  const { setCurrentUser } = useUser();
 
   async function fetchUser(formData: FormData) {
     const auth = {
@@ -38,6 +40,7 @@ export default function Login() {
       .then((data) => {
         localStorage.clear();
         localStorage.setItem("currentUser", JSON.stringify(data));
+        setCurrentUser(data);
         navigate("/");
       })
       .catch((err) => {
