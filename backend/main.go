@@ -222,7 +222,7 @@ func main() {
 
 		response, err := utils.TweetToResponseUser(tweet)
 		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, err)
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err})
 		}
 		ctx.JSON(http.StatusOK, response)
 	})

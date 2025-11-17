@@ -26,9 +26,13 @@ func getUser(ctx *gin.Context) models.User {
 
 func GetUserProfile(ctx *gin.Context) {
 	user := getUser(ctx)
-	db.DB.Preload("Tweets").First(&user)
+	db.DB.Preload("Tweets.User").First(&user)
 
-	ctx.JSON(http.StatusOK, user)
+	response, err := utils.UserToResponseTweets(user)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err})
+	}
+	ctx.JSON(http.StatusOK, response)
 }
 
 func PutUserProfile(ctx *gin.Context) {

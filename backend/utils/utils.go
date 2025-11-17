@@ -2,6 +2,7 @@ package utils
 
 import (
 	"errors"
+	"log"
 	"react-go-backend/models"
 )
 
@@ -35,7 +36,8 @@ func TweetsToResponses(tweets []models.Tweet) []models.TweetResponse {
 func TweetToResponseUser(tweet models.Tweet) (models.TweetResponse, error) {
 	var tweetResponse models.TweetResponse
 	if tweet.User == nil {
-		return tweetResponse, errors.New("\"User\" field not preloaded")
+		log.Print("User field not preloaded")
+		return tweetResponse, errors.New("User field not preloaded")
 	}
 
 	tweetResponse = TweetToResponse(tweet)
