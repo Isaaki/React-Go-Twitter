@@ -1,3 +1,5 @@
+import type { SortMode } from "./sortmode";
+
 export interface User {
   id: number;
   createdAt: string;
@@ -28,9 +30,4 @@ export interface Tweet {
   views: number;
 }
 
-export type SortModeType = {
-  ASC: symbol;
-  DEC: symbol;
-};
-
-export type SortModeKeyType = SortModeType[keyof SortModeType];
+export type SortModeType = (typeof SortMode)[keyof typeof SortMode];

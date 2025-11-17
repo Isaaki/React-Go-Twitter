@@ -1,0 +1,21 @@
+.side-content {
+    display: grid;
+    padding-top: 25px;
+    margin-top: 25px;
+    grid-auto-rows: minmax(10px, 50px);
+    align-items: center;
+    justify-items: center;
+
+    gap: 20px;
+}
+
+.side-content > * {
+    margin: 10px;
+    padding: 4px;
+    border: 1px solid gray;
+}
+
+.side-content div {
+    display: grid;
+    justify-items: center;
+}

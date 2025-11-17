@@ -1,4 +1,3 @@
-// import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import type { Tweet } from "../utils/types";
@@ -7,6 +6,11 @@ import { RelativeTimeDisplay } from "../utils/time";
 import "./TweetFeed.css";
 
 export default function TweetFeed({ tweets: tweets }: { tweets: Tweet[] }) {
+  if (!tweets) {
+    console.error("no tweets");
+    return;
+  }
+
   const tweetItems = tweets.map((tweet) => {
     return (
       <div id="tweet-copy" key={tweet.id}>
@@ -60,5 +64,5 @@ export default function TweetFeed({ tweets: tweets }: { tweets: Tweet[] }) {
     );
   });
 
-  return <>{tweetItems}</>;
+  return <div className="tweet-feed">{tweetItems}</div>;
 }

@@ -1,8 +1,7 @@
 /* Main content */
 
 #main-content {
-    display: grid;
-    grid-template-columns: 600px 350px;
+    display: flex;
     width: 990px;
     gap: 40px;
 }
@@ -12,27 +11,5 @@
 .main-feed {
     border-right: 1px solid var(--border-color);
     border-left: 1px solid var(--border-color);
-}
-
-.side-content {
-    display: grid;
-    padding-top: 25px;
-    margin-top: 25px;
-    grid-template-columns: 75%;
-    grid-auto-rows: minmax(10px, 50px);
-    align-items: center;
-    justify-items: center;
-
-    gap: 20px;
-}
-
-.side-content > * {
-    margin: 10px;
-    padding: 4px;
-    border: 1px solid gray;
-}
-
-.side-content div {
-    display: grid;
-    justify-items: center;
+    width: 600px;
 }

@@ -1,7 +1,7 @@
 /* MAIN TWEETS  */
 
 .tweet-feed {
-    width: max(30rem, 40vw);
+    width: 600px;
 }
 .tweet-feed-container {
     display: flex;

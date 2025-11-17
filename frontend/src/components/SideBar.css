@@ -127,6 +127,7 @@
 
 .tweet-button {
     font-size: var(--font-size-normal);
+    align-self: center;
     width: 230px;
     height: 49px;
     margin: 15px 0;

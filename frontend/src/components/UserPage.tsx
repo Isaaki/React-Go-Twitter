@@ -1,13 +1,14 @@
 import { useParams } from "react-router-dom";
 import { useCurrentUser } from "../context/useUser";
 import { useEffect, useState } from "react";
-import type { User } from "../utils/types";
-import TweetFeedUser from "./TweetFeedUser";
+import type { Tweet } from "../utils/types";
+import TweetFeed from "./TweetFeed";
+import SideBar from "./SideBar";
 
 export default function UserPage() {
   const { currentUser } = useCurrentUser();
   const { username } = useParams();
-  const [user, setUser] = useState<User | null>(null);
+  const [tweets, setTweets] = useState<Tweet[] | null>(null);
 
   useEffect(() => {
     if (username === currentUser?.username) {
@@ -18,19 +19,22 @@ export default function UserPage() {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-          setUser(data);
+          setTweets(data);
         })
         .catch((err) => {
           console.error(err);
         });
     } else {
-      fetch(`http://localhost:8080/api/user/?username=${username}`, {
-        method: "GET",
-      })
+      fetch(
+        `http://localhost:8080/api/user/?username=${username}&tweets=true`,
+        {
+          method: "GET",
+        },
+      )
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-          setUser(data);
+          setTweets(data);
         })
         .catch((err) => {
           console.error(err);
@@ -44,13 +48,12 @@ export default function UserPage() {
     <div
       style={{
         display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
         width: "100%",
-        height: "100%",
+        justifyContent: "center",
       }}
     >
-      {user && <TweetFeedUser user={user} />}
+      <SideBar></SideBar>
+      {tweets && <TweetFeed tweets={tweets} />}
     </div>
   );
 }

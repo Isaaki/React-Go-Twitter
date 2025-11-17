@@ -4,6 +4,7 @@ import { useCurrentUser } from "../context/useUser";
 import UserPopup from "./UserPopup";
 
 import "./SideBar.css";
+import { Link } from "react-router-dom";
 
 export default function SideBar() {
   const [profileClicked, setProfileClicked] = useState(false);
@@ -19,14 +20,14 @@ export default function SideBar() {
           </a>
           {/*Navbar*/}
           <nav className="navbar">
-            <a className="navbar-item" href="#">
+            <Link to={"/home"} className="navbar-item">
               <div className="navbar-text-container">
                 <div className="navbar-icon-container">
                   <i className="fas fa-home"></i>
                 </div>
                 <div className="navbar-text">Home</div>
               </div>
-            </a>
+            </Link>
             <a className="navbar-item" href="#">
               <div className="navbar-text-container">
                 <div className="navbar-icon-container">
