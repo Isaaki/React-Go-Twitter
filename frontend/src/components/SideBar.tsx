@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCurrentUser } from "../context/useUser";
+import { useUser } from "../context/useUser";
 
 import UserPopup from "./UserPopup";
 
@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 export default function SideBar() {
   const [profileClicked, setProfileClicked] = useState(false);
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useUser();
 
   if (currentUser) {
     return (

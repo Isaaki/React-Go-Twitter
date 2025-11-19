@@ -38,8 +38,6 @@ export default function Login() {
     response
       .json()
       .then((data) => {
-        localStorage.clear();
-        localStorage.setItem("currentUser", JSON.stringify(data));
         setCurrentUser(data);
         navigate("/");
       })

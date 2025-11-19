@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCurrentUser } from "../context/useUser";
+import { useUser } from "../context/useUser";
 import { SortMode } from "../utils/sortmode";
 
 import "./SideContent.css";
@@ -8,7 +8,7 @@ import { useSortMode } from "../context/useSortMode";
 export default function SideContent() {
   const [profilePic, setProfilePic] = useState<File | null>(null);
   const { sortMode, setSortMode } = useSortMode();
-  const { setCurrentUser } = useCurrentUser();
+  const { setCurrentUser } = useUser();
 
   const handleProfilePictureChange = (
     e: React.ChangeEvent<HTMLInputElement>,

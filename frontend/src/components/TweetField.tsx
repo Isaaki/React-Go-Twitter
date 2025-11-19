@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import "./TweetField.css";
-import { useCurrentUser } from "../context/useUser";
+import { useUser } from "../context/useUser";
 import { Link } from "react-router-dom";
 
 interface TweetFieldProps {
@@ -11,7 +11,7 @@ export default function TweetField({ tweetPosted }: TweetFieldProps) {
   const [text, setText] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useUser();
 
   const tweetPost = async () => {
     if (text !== "") {
@@ -40,12 +40,11 @@ export default function TweetField({ tweetPosted }: TweetFieldProps) {
     }
   };
 
-  // Automatically adjust height when text changes
   useEffect(() => {
     const textarea = textareaRef.current;
     if (textarea) {
-      textarea.style.height = "auto"; // Reset to shrink when deleting
-      textarea.style.height = `${textarea.scrollHeight}px`; // Grow to fit
+      textarea.style.height = "auto";
+      textarea.style.height = `${textarea.scrollHeight}px`;
     }
   }, [setText]);
 

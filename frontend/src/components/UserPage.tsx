@@ -1,24 +1,23 @@
 import { useParams } from "react-router-dom";
-import { useCurrentUser } from "../context/useUser";
+import { useUser } from "../context/useUser";
 import { useEffect, useState } from "react";
 import type { Tweet } from "../utils/types";
 import TweetFeed from "./TweetFeed";
 import SideBar from "./SideBar";
 
 export default function UserPage() {
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useUser();
   const { username } = useParams();
   const [tweets, setTweets] = useState<Tweet[] | null>(null);
 
   useEffect(() => {
     if (username === currentUser?.username) {
-      fetch(`http://localhost:8080/user/profile`, {
+      fetch(`http://localhost:8080/user/tweet`, {
         method: "GET",
         credentials: "include",
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           setTweets(data);
         })
         .catch((err) => {
@@ -41,8 +40,6 @@ export default function UserPage() {
         });
     }
   }, []);
-
-  // const userPageStyle = {};
 
   return (
     <div
