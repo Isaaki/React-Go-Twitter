@@ -49,7 +49,7 @@ export default function TweetField({ tweetPosted }: TweetFieldProps) {
   }, [setText]);
 
   if (!currentUser) {
-    <>Loading User</>;
+    return <>Loading User</>;
   } else {
     return (
       <>
@@ -113,7 +113,6 @@ export default function TweetField({ tweetPosted }: TweetFieldProps) {
             </div>
           </div>
         </div>
-        <div className="tweet-feed-seperator"></div>
       </>
     );
   }

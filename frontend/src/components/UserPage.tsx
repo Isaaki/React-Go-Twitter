@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import type { Tweet } from "../utils/types";
 import TweetFeed from "./TweetFeed";
 import SideBar from "./SideBar";
+import TweetField from "./TweetField";
 
 export default function UserPage() {
   const { currentUser } = useUser();
   const { username } = useParams();
   const [tweets, setTweets] = useState<Tweet[] | null>(null);
+  const [reloadTweetsKey, setReloadTweetsKey] = useState<number>(0);
 
   useEffect(() => {
     if (username === currentUser?.username) {
@@ -39,7 +41,11 @@ export default function UserPage() {
           console.error(err);
         });
     }
-  }, []);
+  }, [reloadTweetsKey]);
+
+  function tweetPosted() {
+    setReloadTweetsKey((k) => k + 1);
+  }
 
   return (
     <div
@@ -50,7 +56,16 @@ export default function UserPage() {
       }}
     >
       <SideBar></SideBar>
-      {tweets && <TweetFeed tweets={tweets} />}
+      <div>
+        <div className="feed-header">
+          <a href="#">Home</a>
+          <button className="feed-header-icon">
+            <i className="fas fa-star"></i>
+          </button>
+        </div>
+        <TweetField tweetPosted={tweetPosted} />
+        {tweets && <TweetFeed tweets={tweets} />}
+      </div>
     </div>
   );
 }

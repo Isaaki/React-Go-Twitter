@@ -12,6 +12,7 @@ function Home() {
     <SortProvider>
       <div
         style={{
+          position: "relative",
           display: "flex",
           width: "100%",
           justifyContent: "center",

@@ -110,6 +110,8 @@ hr {
     display: flex;
     gap: 0 var(--stadard-margin);
     padding: 10px 15px;
+
+    border-bottom: 1px solid var(--border-color);
 }
 
 .tweet-feed-box {
